@@ -13,7 +13,7 @@ exports.create = async (req, res, next) => {
     return next(new ApiError(400, "soQuyen can not be empty"));
   } else if (!req.body?.namXuatBan) {
     return next(new ApiError(400, "namXuatBan can not be empty"));
-  } else if (!req.body?.MaNXB) {
+  } else if (!req.body?.maNXB) {
     return next(new ApiError(400, "MaNXB can not be empty"));
   }
   try {
@@ -108,15 +108,3 @@ exports.deleteAll = async (req, res, next) => {
     return next(new ApiError(500, "An error occurred while remove all books"));
   }
 };
-
-// exports.findAllFavorite = async (req, res) => {
-//   try {
-//     const bookService = new BookService(MongoDB.client);
-//     const documents = await bookService.findFavorite();
-//     return res.send(documents);
-//   } catch (error) {
-//     return next(
-//       new ApiError(500, "An error occurred while retrieving favorite book")
-//     );
-//   }
-// };

@@ -13,8 +13,8 @@ class BookService {
       donGia: payload.donGia,
       soQuyen: payload.soQuyen,
       namXuatBan: payload.namXuatBan,
-      MaNXB: payload.MaNXB,
-      nguonGocTacGia: payload.nguonGocTacGia,
+      maNXB: payload.maNXB,
+      tacGia: payload.tacGia,
     };
     // Remove undefined fields
     Object.keys(book).forEach(
