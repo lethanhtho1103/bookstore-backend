@@ -8,7 +8,7 @@ class NxbService {
   // Định nghĩa các phương thức truy xuất CSDL sử dụng mongodb API
   extractNxbData(payload) {
     const nxb = {
-      maNxb: payload.maNxb,
+      _id: payload.maNxb,
       tenNxb: payload.tenNxb,
       diaChi: payload.diaChi,
     };
@@ -48,7 +48,8 @@ class NxbService {
 
   async findById(id) {
     return await this.Nxb.findOne({
-      _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
+      // _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
+      _id: id,
     });
   }
 

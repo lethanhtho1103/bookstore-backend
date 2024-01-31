@@ -8,13 +8,16 @@ class BookService {
   // Định nghĩa các phương thức truy xuất CSDL sử dụng mongodb API
   extractBookData(payload) {
     const book = {
-      maSach: payload.maSach,
+      _id: payload.maSach,
       tenSach: payload.tenSach,
       donGia: payload.donGia,
       soQuyen: payload.soQuyen,
       namXuatBan: payload.namXuatBan,
-      maNXB: payload.maNXB,
       tacGia: payload.tacGia,
+      // maNxb: ObjectId.isValid(payload.maNxb)
+      //   ? new ObjectId(payload.maNxb)
+      //   : null,
+      maNxb: payload.maNxb,
     };
     // Remove undefined fields
     Object.keys(book).forEach(
@@ -68,10 +71,6 @@ class BookService {
       _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
     });
     return result;
-  }
-
-  async findFavorite() {
-    return await this.find({ favorite: true });
   }
 
   async deleteAll() {

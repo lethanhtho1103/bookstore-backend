@@ -1,6 +1,7 @@
 const BookService = require("../services/book.service");
 const MongoDB = require("../utils/mongodb.util");
 const ApiError = require("../api-error");
+const NxbService = require("../services/published.service");
 
 exports.create = async (req, res, next) => {
   if (!req.body?.maSach) {
@@ -13,8 +14,8 @@ exports.create = async (req, res, next) => {
     return next(new ApiError(400, "soQuyen can not be empty"));
   } else if (!req.body?.namXuatBan) {
     return next(new ApiError(400, "namXuatBan can not be empty"));
-  } else if (!req.body?.maNXB) {
-    return next(new ApiError(400, "MaNXB can not be empty"));
+  } else if (!req.body?.maNxb) {
+    return next(new ApiError(400, "MaNxb can not be empty"));
   }
   try {
     const bookService = new BookService(MongoDB.client);
@@ -29,21 +30,29 @@ exports.create = async (req, res, next) => {
 };
 
 exports.findAll = async (req, res, next) => {
-  let documents = [];
+  let books = [];
   try {
     const bookService = new BookService(MongoDB.client);
+    const nxbService = new NxbService(MongoDB.client);
+
     const { tenSach } = req.query;
     if (tenSach) {
-      documents = await bookService.findByTenSach(tenSach);
+      books = await bookService.findByTenSach(tenSach);
     } else {
-      documents = await bookService.find({});
+      books = await bookService.find({});
     }
+    const results = await Promise.all(
+      books.map(async (book) => {
+        let nxb = await nxbService.findById(book.maNxb);
+        return { ...book, nxb };
+      })
+    );
+    return res.send(results);
   } catch (error) {
     return next(
       new ApiError(500, "An error occurred while retrieving the book")
     );
   }
-  return res.send(documents);
 };
 
 exports.findOne = async (req, res, next) => {

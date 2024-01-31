@@ -1,5 +1,5 @@
 const express = require("express");
-const nxbs = require("../controllers/nxs.controller");
+const nxbs = require("../controllers/published.controller");
 
 const router = express.Router();
 

@@ -1,11 +1,9 @@
-const NXBService = require("../services/nxb.service");
+const NXBService = require("../services/published.service");
 const MongoDB = require("../utils/mongodb.util");
 const ApiError = require("../api-error");
 
 exports.create = async (req, res, next) => {
-  if (!req.body?.maNxb) {
-    return next(new ApiError(400, "maNxb can not be empty"));
-  } else if (!req.body?.tenNxb) {
+  if (!req.body?.tenNxb) {
     return next(new ApiError(400, "tenNxb can not be empty"));
   } else if (!req.body?.diaChi) {
     return next(new ApiError(400, "diaChi can not be empty"));
